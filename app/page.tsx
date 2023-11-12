@@ -1,11 +1,31 @@
+import { FormDefinitions } from "../definitions";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <div className="relative flex flex-col place-items-center after:absolute after:inset-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:-z-20 after:h-[180px] after:w-[240px] after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-['']  after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 z-[-1]">
-        <kbd>autofilth.lol</kbd>
-        <em className="opacity-50">
-          <small>coming soon</small>
-        </em>
+    <main className="flex min-h-screen flex-col items-center p-24 font-mono">
+      <div className="mt-8 grid gap-5 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-2 lg:text-left">
+        {FormDefinitions.map((form, idx) => {
+          const definition = btoa(encodeURIComponent(JSON.stringify(form)));
+
+          return (
+            <a
+              key={`form-${idx}`}
+              href={`/form?definition=${definition}`}
+              className="group rounded-lg border border-gray-800 px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+              rel="noopener noreferrer"
+            >
+              <h2 className={`mb-3 text-lg font-semibold`}>
+                {form.name}
+                <span className="inline-block ml-4 transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+                  →
+                </span>
+              </h2>
+              <p className={`m-0 max-w-[40ch] text-sm`}>
+                <span className="opacity-70">{form.description}</span>
+              </p>
+            </a>
+          );
+        })}
       </div>
     </main>
   );
