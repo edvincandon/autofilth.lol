@@ -43,9 +43,9 @@ export default function Form() {
 
   return (
     <>
-      <main className="flex flex-col gap-8 items-center p-24 font-mono">
+      <main className="flex flex-col gap-8 items-center py-24 px-4 font-mono">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-2xl">
+          <h2 className="text-xl lg:text-3xl font-bold tracking-tight text-white sm:text-2xl">
             {config.form.name}
           </h2>
           <p className="text-gray-400 max-w-xs mt-4 leading-4">
@@ -139,7 +139,7 @@ export default function Form() {
           </form>
         )}
       </main>
-      <footer className="bg-gray-950 p-4 flex gap-x-8 justify-center items-center fixed bottom-0 w-full font-mono">
+      <footer className="bg-gray-950 p-4 flex flex-col lg:flex-row gap-8 justify-center items-center fixed bottom-0 w-full font-mono">
         <Select<FormMode>
           id="mode"
           value={state.mode}
@@ -153,7 +153,7 @@ export default function Form() {
           }
         />
 
-        <span className="text-xl mt-4">→</span>
+        <span className="text-xl mt-4 hidden lg:block">→</span>
 
         <Select<ResponseStatus>
           id="status"

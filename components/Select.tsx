@@ -12,7 +12,7 @@ export const Select = <T extends string | number>({
   options,
   onChange,
 }: Props<T>) => (
-  <div className="flex flex-col w-[200px]">
+  <div className="flex flex-col w-[280px] lg:w-[200px]">
     <label htmlFor={id} className="text-gray-400 text-xs mb-1">
       {label}
     </label>
