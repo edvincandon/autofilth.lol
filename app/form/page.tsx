@@ -15,7 +15,7 @@ import { FormResult, useFormResult } from "./useFormResult";
 type FormState = { mode: FormMode; status: ResponseStatus };
 
 export default function Form() {
-  const config = useFormDefinition();
+  const [config, setConfig] = useFormDefinition();
   const [result, setResult] = useFormResult();
   const form = useRef<HTMLFormElement>(null);
 
@@ -28,14 +28,14 @@ export default function Form() {
 
   const ajaxSubmit = async () => {
     try {
+      const body = new FormData(form.current!);
+      const next = body.get("next");
       const { ok } = await (
-        await fetch("/api/submit", {
-          method: "POST",
-          body: new FormData(form.current!),
-        })
+        await fetch("/api/submit", { method: "POST", body })
       ).json();
 
-      setResult(ok ? FormResult.SUCCESS : FormResult.ERROR);
+      if (ok && next) setConfig(next.toString());
+      else setResult(ok ? FormResult.SUCCESS : FormResult.ERROR);
     } catch {
       setResult(FormResult.ERROR);
     }
@@ -97,6 +97,16 @@ export default function Form() {
             <input type="hidden" name="definition" value={config.definition} />
             <input type="hidden" name="mode" value={state.mode} />
             <input type="hidden" name="status" value={state.status} />
+
+            {config.form.next && (
+              <input
+                type="hidden"
+                name="next"
+                value={btoa(
+                  encodeURIComponent(JSON.stringify(config.form.next))
+                )}
+              />
+            )}
 
             <div className="grid grid-cols-1 gap-y-6">
               {config.form.fields.map((field) => (

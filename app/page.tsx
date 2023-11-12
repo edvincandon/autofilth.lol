@@ -3,7 +3,7 @@ import { FormDefinitions } from "../definitions";
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center p-24 font-mono">
-      <div className="mt-8 grid gap-5 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-2 lg:text-left">
+      <div className="mt-8 grid gap-5 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-3 lg:text-left">
         {FormDefinitions.map((form, idx) => {
           const definition = btoa(encodeURIComponent(JSON.stringify(form)));
 

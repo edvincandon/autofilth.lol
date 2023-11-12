@@ -35,8 +35,9 @@ export type FormDefinition = {
   description: string;
   submitText: string;
   errorText: string;
-  okText: string;
+  okText?: string;
   fields: FormFieldDefinition[];
+  next?: FormDefinition;
 };
 
 const UsernameField: FormFieldDefinition = {
@@ -102,6 +103,29 @@ export const FormDefinitions: FormDefinition[] = [
     submitText: "Login",
     errorText: "Something went filthy..",
     okText: "Looks like you got in",
+  },
+  {
+    name: "🚦 Login steps (1/3)",
+    description:
+      "Login form with email, password and OTP validation in 3 steps.",
+    fields: [EmailField],
+    submitText: "Continue",
+    errorText: "Invalid username",
+    next: {
+      name: "🚦 Login steps (2/3)",
+      description: "Please enter your password to continue",
+      fields: [CurrentPasswordField],
+      submitText: "Log in",
+      errorText: "Filthy password is incorrect",
+      next: {
+        name: "🚦 Login steps (3/3)",
+        description: "Confirm with your 2FA-linked device",
+        fields: [OTPField],
+        submitText: "Continue",
+        errorText: "Filthy OTP code",
+        okText: "Welcome back old chap !",
+      },
+    },
   },
   {
     name: "🔑 OTP Code",
