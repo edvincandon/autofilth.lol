@@ -28,6 +28,7 @@ export type FormFieldDefinition = {
   autocomplete?: string;
   required?: boolean;
   inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
+  autoFocus?: boolean;
 };
 
 export type FormDefinition = {

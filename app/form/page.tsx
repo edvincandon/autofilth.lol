@@ -109,7 +109,7 @@ export default function Form() {
             )}
 
             <div className="grid grid-cols-1 gap-y-6">
-              {config.form.fields.map((field) => (
+              {config.form.fields.map((field, idx) => (
                 <Input
                   key={field.id}
                   id={field.id}
@@ -118,6 +118,7 @@ export default function Form() {
                   autocomplete={field.autocomplete}
                   required={field.required}
                   inputMode={field.inputMode}
+                  autoFocus={idx === 0}
                 />
               ))}
 
