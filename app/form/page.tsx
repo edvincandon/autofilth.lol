@@ -43,7 +43,7 @@ export default function Form() {
 
   return (
     <>
-      <main className="flex flex-col gap-8 items-center py-24 px-4 font-mono">
+      <main className="flex flex-col gap-8 items-center pt-24 pb-52 px-4 font-mono">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-xl lg:text-3xl font-bold tracking-tight text-white sm:text-2xl">
             {config.form.name}
