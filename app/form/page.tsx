@@ -141,7 +141,7 @@ export default function Form() {
           </form>
         )}
       </main>
-      <footer className="bg-gray-950 p-4 flex flex-col lg:flex-row gap-8 justify-center items-center fixed bottom-0 w-full font-mono">
+      <footer className="bg-gray-950 p-4 flex flex-col z-40 lg:flex-row gap-8 justify-center items-center fixed bottom-0 w-full font-mono">
         <Select<FormMode>
           id="mode"
           value={state.mode}
