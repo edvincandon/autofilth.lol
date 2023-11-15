@@ -68,6 +68,7 @@ export default function Form() {
         {result !== FormResult.SUCCESS && (
           <form
             ref={form}
+            id={config.form.id}
             className="w-[280px]"
             {...(() => {
               switch (state.mode) {

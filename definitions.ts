@@ -33,6 +33,7 @@ export type FormFieldDefinition = {
 
 export type FormDefinition = {
   name: string;
+  id: string;
   description: string;
   submitText: string;
   errorText: string;
@@ -90,6 +91,7 @@ const OTPField: FormFieldDefinition = {
 
 export const FormDefinitions: FormDefinition[] = [
   {
+    id: "login",
     name: "👤 Login username",
     description: "Login form with required username and password fields.",
     fields: [UsernameField, CurrentPasswordField],
@@ -98,6 +100,7 @@ export const FormDefinitions: FormDefinition[] = [
     okText: "✅ Logged in !",
   },
   {
+    id: "login",
     name: "📧 Login email",
     description: "Login form with required email and password fields.",
     fields: [EmailField, CurrentPasswordField],
@@ -106,6 +109,7 @@ export const FormDefinitions: FormDefinition[] = [
     okText: "✅ Logged in !",
   },
   {
+    id: "login",
     name: "🚦 Login steps (1/3)",
     description:
       "Login form with email, password and OTP validation in 3 steps.",
@@ -113,12 +117,14 @@ export const FormDefinitions: FormDefinition[] = [
     submitText: "Continue",
     errorText: "❌ Invalid username",
     next: {
+      id: "login",
       name: "🚦 Login steps (2/3)",
       description: "Please enter your password to continue",
       fields: [CurrentPasswordField],
       submitText: "Log in",
       errorText: "❌ Invalid password",
       next: {
+        id: "login",
         name: "🚦 Login steps (3/3)",
         description: "Confirm with your 2FA-linked device",
         fields: [OTPField],
@@ -129,6 +135,7 @@ export const FormDefinitions: FormDefinition[] = [
     },
   },
   {
+    id: "mfa",
     name: "🔑 OTP Code",
     description:
       "One time password field form to test 2FA auto-filling capabilities",
@@ -138,6 +145,7 @@ export const FormDefinitions: FormDefinition[] = [
     okText: "✅ OTP Code validated",
   },
   {
+    id: "register",
     name: "📝 Register email",
     description: "Register form with email and password fields.",
     fields: [EmailField, NewPasswordField, ConfirmPasswordField],
@@ -146,6 +154,7 @@ export const FormDefinitions: FormDefinition[] = [
     okText: "✅ Account created !",
   },
   {
+    id: "register",
     name: "📋 Register username",
     description: "Register form with username and password fields.",
     fields: [UsernameField, NewPasswordField, ConfirmPasswordField],
@@ -154,6 +163,7 @@ export const FormDefinitions: FormDefinition[] = [
     okText: "✅ Account created !",
   },
   {
+    id: "register",
     name: "🧠 Register email/user",
     description: "Register form with both username, email and password fields.",
     fields: [UsernameField, EmailField, NewPasswordField, ConfirmPasswordField],
@@ -162,6 +172,7 @@ export const FormDefinitions: FormDefinition[] = [
     okText: "✅ Account created !",
   },
   {
+    id: "register",
     name: "🚦 Register steps (1/2)",
     description:
       "Register form with email and password fields in multiple steps.",
@@ -169,6 +180,7 @@ export const FormDefinitions: FormDefinition[] = [
     submitText: "Continue",
     errorText: "❌ Something went wrong",
     next: {
+      id: "register",
       name: "🚦 Register steps (2/2)",
       description: "Pick a password to continue registration",
       fields: [NewPasswordField, ConfirmPasswordField],
