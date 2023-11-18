@@ -8,9 +8,10 @@ import {
   ResponseStatus,
   ResponseStatuses,
 } from "@/definitions";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useFormDefinition } from "./useFormDefinition";
 import { FormResult, useFormResult } from "./useFormResult";
+import { useLocalStorage } from "@/utils";
 
 type FormState = { mode: FormMode; status: ResponseStatus };
 
@@ -19,7 +20,7 @@ export default function Form() {
   const [result, setResult] = useFormResult();
   const form = useRef<HTMLFormElement>(null);
 
-  const [state, setState] = useState<FormState>({
+  const [state, setState] = useLocalStorage<FormState>("form_state", {
     mode: "form_submit:action",
     status: 200,
   });
@@ -147,12 +148,7 @@ export default function Form() {
           value={state.mode}
           label="Mode"
           options={FormModes}
-          onChange={(value) =>
-            setState(({ status }) => ({
-              status,
-              mode: value as FormMode,
-            }))
-          }
+          onChange={(value) => setState({ ...state, mode: value as FormMode })}
         />
 
         <span className="text-xl mt-4 hidden lg:block">→</span>
@@ -162,12 +158,7 @@ export default function Form() {
           value={state.status}
           label="Response"
           options={ResponseStatuses}
-          onChange={(value) =>
-            setState(({ mode }) => ({
-              mode,
-              status: parseInt(value, 10) as ResponseStatus,
-            }))
-          }
+          onChange={(value) => setState({ ...state, status: parseInt(value, 10) as ResponseStatus })}
         />
       </footer>
     </>
