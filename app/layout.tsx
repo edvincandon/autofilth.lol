@@ -6,8 +6,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Autofilth.lol",
-  description: "Ensuring sure your password manager works !",
+  title: "🫠 AutoFilth",
+  description: "Ensuring sure your password manager's Heufilthstics™️ works !",
 };
 
 export default function RootLayout({
