@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "🫠 AutoFilth",
-  description: "Ensuring sure your password manager's Heufilthstics™️ works !",
+  description: "Ensuring sure your password manager's Heufilthstics™️ work !",
 };
 
 export default function RootLayout({
