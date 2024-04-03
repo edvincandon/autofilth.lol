@@ -189,4 +189,23 @@ export const FormDefinitions: FormDefinition[] = [
       okText: "✅ Account created !",
     },
   },
+  {
+    id: "password-change",
+    name: "🔐 Password reset",
+    description: "A simple password change form with a single field",
+    fields: [NewPasswordField],
+    submitText: "Change password",
+    errorText: "❌ Something went wrong",
+    okText: "✅ Password changed !",
+  },
+
+  {
+    id: "password-change",
+    name: "🔐 Password change",
+    description: "A password change form with current password confirmation",
+    fields: [CurrentPasswordField, NewPasswordField, NewPasswordField],
+    submitText: "Reset password",
+    errorText: "❌ Something went wrong",
+    okText: "✅ Password changed !",
+  },
 ];
