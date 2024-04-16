@@ -56,6 +56,10 @@ export default function Home() {
           a pinch of algorithmic absurdity to navigate the labyrinth of
           developer-generated entropy.
         </blockquote>
+
+        <blockquote>
+          <strong className="text-black">Help me</strong>
+        </blockquote>
       </div>
     </main>
   );
