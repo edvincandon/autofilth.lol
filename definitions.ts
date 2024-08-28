@@ -24,11 +24,16 @@ export const ResponseStatuses: { label: string; value: ResponseStatus }[] = [
 export type FormFieldDefinition = {
   id: string;
   label: string;
-  type?: "text" | "email" | "password";
+  type: "text" | "email" | "password";
   autocomplete?: string;
   required?: boolean;
   inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
   autoFocus?: boolean;
+};
+
+export type FormSectionSeparator = {
+  label: string;
+  type: "separator";
 };
 
 export type FormDefinition = {
@@ -38,12 +43,13 @@ export type FormDefinition = {
   submitText: string;
   errorText: string;
   okText?: string;
-  fields: FormFieldDefinition[];
+  fields: (FormFieldDefinition | FormSectionSeparator)[];
   next?: FormDefinition;
 };
 
 const UsernameField: FormFieldDefinition = {
   id: "username",
+  type: "text",
   label: "Username",
   autocomplete: "username",
   required: true,
@@ -88,6 +94,69 @@ const OTPField: FormFieldDefinition = {
   autocomplete: "one-time-code",
   required: true,
 };
+
+const IdentitySection: FormFieldDefinition[] = [
+  {
+    id: "firstname",
+    label: "First name",
+    type: "text",
+    autocomplete: "given-name",
+  },
+  {
+    id: "middlename",
+    label: "Middle name",
+    type: "text",
+    autocomplete: "additional-name",
+  },
+  {
+    id: "lastname",
+    label: "Last name",
+    type: "text",
+    autocomplete: "family-name",
+  },
+  {
+    id: "email",
+    label: "Email",
+    type: "email",
+    autocomplete: "email",
+  },
+  {
+    id: "phone",
+    label: "Phone number",
+    type: "text",
+    autocomplete: "tel",
+  },
+  {
+    id: "address",
+    label: "Street address",
+    type: "text",
+    autocomplete: "address-line1",
+  },
+  {
+    id: "state",
+    label: "State",
+    type: "text",
+    autocomplete: "address-level1",
+  },
+  {
+    id: "city",
+    label: "City",
+    type: "text",
+    autocomplete: "address-level2",
+  },
+  {
+    id: "postal-code",
+    label: "Postal code",
+    type: "text",
+    autocomplete: "postal-code",
+  },
+  {
+    id: "country",
+    label: "Country",
+    type: "text",
+    autocomplete: "country-name",
+  },
+];
 
 export const FormDefinitions: FormDefinition[] = [
   {
@@ -198,7 +267,6 @@ export const FormDefinitions: FormDefinition[] = [
     errorText: "❌ Something went wrong",
     okText: "✅ Password changed !",
   },
-
   {
     id: "password-change",
     name: "🔐 Password change",
@@ -207,5 +275,28 @@ export const FormDefinitions: FormDefinition[] = [
     submitText: "Reset password",
     errorText: "❌ Something went wrong",
     okText: "✅ Password changed !",
+  },
+  {
+    id: "identity-simple",
+    name: "🪪 Identity basic",
+    description: "A simple identity form with a single section",
+    fields: IdentitySection,
+    submitText: "Submit",
+    errorText: "❌ Something went wrong",
+    okText: "✅ Identity saved !",
+  },
+  {
+    id: "identity-sections",
+    name: "🪪 Identity sections",
+    description: "An identity form with multiple sections",
+    fields: [
+      { type: "separator", label: "1. Billing" },
+      ...IdentitySection,
+      { type: "separator", label: "2. Shipping" },
+      ...IdentitySection,
+    ],
+    submitText: "Submit",
+    errorText: "❌ Something went wrong",
+    okText: "✅ Identity saved !",
   },
 ];
