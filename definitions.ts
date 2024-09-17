@@ -179,6 +179,23 @@ export const FormDefinitions: FormDefinition[] = [
   },
   {
     id: "login",
+    name: "🚦 Login steps (1/2)",
+    description: "Login form with OTP validation in 2 steps.",
+    fields: [EmailField, CurrentPasswordField],
+    submitText: "Continue",
+    errorText: "❌ Invalid username",
+    next: {
+      id: "login",
+      name: "🚦 Login steps (2/2)",
+      description: "Confirm with your 2FA-linked device",
+      fields: [OTPField],
+      submitText: "Continue",
+      errorText: "❌ Invalid OTP Code",
+      okText: "✅ Logged in !",
+    },
+  },
+  {
+    id: "login",
     name: "🚦 Login steps (1/3)",
     description:
       "Login form with email, password and OTP validation in 3 steps.",
