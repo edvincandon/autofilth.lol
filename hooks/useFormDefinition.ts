@@ -1,6 +1,6 @@
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { FormDefinition } from "../../definitions";
+import { FormDefinition } from "../definitions";
 
 type FormConfig = { form: FormDefinition; definition: string };
 

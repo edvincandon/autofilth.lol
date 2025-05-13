@@ -1,4 +1,4 @@
-import { FormDefinitions } from "../definitions";
+import { FormDefinitions } from "@/definitions";
 
 export default function Home() {
   return (

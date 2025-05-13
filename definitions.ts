@@ -24,7 +24,7 @@ export const ResponseStatuses: { label: string; value: ResponseStatus }[] = [
 export type FormFieldDefinition = {
   id: string;
   label: string;
-  type: "text" | "email" | "password";
+  type: "text" | "email" | "password" | "number";
   autocomplete?: string;
   required?: boolean;
   inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
@@ -36,6 +36,13 @@ export type FormSectionSeparator = {
   type: "separator";
 };
 
+export type FormFrameDefinition = {
+  id: string;
+  form: FormDefinition;
+  type: "frame";
+  height: number;
+};
+
 export type FormDefinition = {
   name: string;
   id: string;
@@ -43,7 +50,7 @@ export type FormDefinition = {
   submitText: string;
   errorText: string;
   okText?: string;
-  fields: (FormFieldDefinition | FormSectionSeparator)[];
+  fields: (FormFieldDefinition | FormSectionSeparator | FormFrameDefinition)[];
   next?: FormDefinition;
 };
 
@@ -92,6 +99,41 @@ const OTPField: FormFieldDefinition = {
   label: "OTP Code",
   type: "text",
   autocomplete: "one-time-code",
+  required: true,
+};
+
+const CCName: FormFieldDefinition = {
+  id: "cc-name",
+  type: "text",
+  label: "Name on card",
+  autocomplete: "cc-name",
+  required: true,
+  inputMode: "text",
+};
+
+const CCNumberField: FormFieldDefinition = {
+  id: "cc-number",
+  type: "text",
+  label: "Card number",
+  autocomplete: "cc-number",
+  required: true,
+  inputMode: "numeric",
+};
+
+const CCSecurityField: FormFieldDefinition = {
+  id: "cc-cvv",
+  type: "text",
+  label: "Security Code",
+  autocomplete: "cc-csc",
+  required: true,
+  inputMode: "numeric",
+};
+
+const CCExpField: FormFieldDefinition = {
+  id: "cc-exp",
+  type: "text",
+  label: "Expiration (mm/yy)",
+  autocomplete: "cc-exp",
   required: true,
 };
 
@@ -157,6 +199,15 @@ const IdentitySection: FormFieldDefinition[] = [
     autocomplete: "country-name",
   },
 ];
+
+const IFrameForm = (fields: FormFieldDefinition[]): FormDefinition => ({
+  id: "",
+  name: "",
+  description: "",
+  submitText: "",
+  errorText: "",
+  fields,
+});
 
 export const FormDefinitions: FormDefinition[] = [
   {
@@ -315,5 +366,42 @@ export const FormDefinitions: FormDefinition[] = [
     submitText: "Submit",
     errorText: "❌ Something went wrong",
     okText: "✅ Identity saved !",
+  },
+  {
+    id: "cc-payment",
+    name: "💳 Payment form",
+    description: "A payment form with fields nested in sub-frames",
+    fields: [
+      {
+        type: "frame",
+        id: "cc-number-frame",
+        form: IFrameForm([CCNumberField, CCSecurityField, CCExpField]),
+        height: 305,
+      },
+    ],
+    submitText: "Submit",
+    errorText: "❌ Something went wrong",
+    okText: "✅ Payment confirmed !",
+  },
+
+  {
+    id: "cc-checkout",
+    name: "🛒 Checkout form",
+    description: "A checkout form with mixed fields nested in sub-frames",
+    fields: [
+      { type: "separator", label: "1. Shipping" },
+      ...IdentitySection,
+      { type: "separator", label: "2. Billing" },
+      CCName,
+      {
+        type: "frame",
+        id: "cc-number-frame",
+        form: IFrameForm([CCNumberField, CCSecurityField, CCExpField]),
+        height: 305,
+      },
+    ],
+    submitText: "Submit",
+    errorText: "❌ Something went wrong",
+    okText: "✅ Payment confirmed !",
   },
 ];

@@ -1,6 +1,6 @@
 "use client";
 
-import { Input } from "@/components/Input";
+import { Fields } from "@/components/Fields";
 import { Select } from "@/components/Select";
 import {
   FormMode,
@@ -8,10 +8,10 @@ import {
   ResponseStatus,
   ResponseStatuses,
 } from "@/definitions";
+import { useFormDefinition } from "@/hooks/useFormDefinition";
+import { FormResult, useFormResult } from "@/hooks/useFormResult";
 import { useLocalStorage } from "@/utils";
 import { useRef } from "react";
-import { useFormDefinition } from "./useFormDefinition";
-import { FormResult, useFormResult } from "./useFormResult";
 
 type FormState = { mode: FormMode; status: ResponseStatus };
 
@@ -111,24 +111,7 @@ export default function Form() {
             )}
 
             <div className="grid grid-cols-1 gap-y-6">
-              {config.form.fields.map((field, idx) =>
-                field.type === "separator" ? (
-                  <h3 className="underline w100 block" key={`section-${idx}`}>
-                    {field.label}
-                  </h3>
-                ) : (
-                  <Input
-                    key={field.id}
-                    id={field.id}
-                    label={field.label}
-                    type={field.type}
-                    autocomplete={field.autocomplete}
-                    required={field.required}
-                    inputMode={field.inputMode}
-                    autoFocus={idx === 0}
-                  />
-                )
-              )}
+              <Fields fields={config.form.fields} />
 
               <button
                 className="mt-4 group rounded-lg border border-gray-800 px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
