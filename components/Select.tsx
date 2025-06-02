@@ -1,14 +1,16 @@
 type Props<T extends string | number> = {
   label: string;
   id: string;
-  value: T;
+  value?: T;
+  autocomplete?: string;
   options: { label: string; value: T }[];
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
 };
 export const Select = <T extends string | number>({
   label,
   id,
   value,
+  autocomplete,
   options,
   onChange,
 }: Props<T>) => (
@@ -18,9 +20,10 @@ export const Select = <T extends string | number>({
     </label>
     <select
       id={id}
+      autoComplete={autocomplete}
       className="bg-black text-sm rounded-lg border border-gray-600 appearance-none text-white border py-2 px-3 leading-tight focus:outline-none focus:border-gray-700"
       value={value}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(e) => onChange?.(e.target.value)}
     >
       {options.map(({ label, value }) => (
         <option value={value} key={value}>

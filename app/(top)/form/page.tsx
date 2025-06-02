@@ -1,6 +1,6 @@
 "use client";
 
-import { Fields } from "@/components/Fields";
+import { FieldGroup } from "@/components/FieldGroup";
 import { Select } from "@/components/Select";
 import {
   FormMode,
@@ -111,7 +111,7 @@ export default function Form() {
             )}
 
             <div className="grid grid-cols-1 gap-y-6">
-              <Fields fields={config.form.fields} />
+              <FieldGroup fields={config.form.fields} />
 
               <button
                 className="mt-4 group rounded-lg border border-gray-800 px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"

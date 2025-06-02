@@ -21,15 +21,25 @@ export const ResponseStatuses: { label: string; value: ResponseStatus }[] = [
   { label: "Internal server error", value: 500 },
 ];
 
-export type FormFieldDefinition = {
-  id: string;
-  label: string;
-  type: "text" | "email" | "password" | "number";
-  autocomplete?: string;
-  required?: boolean;
-  inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
-  autoFocus?: boolean;
-};
+export type FormFieldDefinition =
+  | {
+      id: string;
+      label: string;
+      type: "text" | "email" | "password" | "number";
+      autocomplete?: string;
+      required?: boolean;
+      inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
+      autoFocus?: boolean;
+    }
+  | {
+      id: string;
+      type: "select";
+      options: { value: string; label: string }[];
+      label: string;
+      required?: boolean;
+      autocomplete?: string;
+      autoFocus?: boolean;
+    };
 
 export type FormSectionSeparator = {
   label: string;
@@ -134,6 +144,47 @@ const CCExpField: FormFieldDefinition = {
   type: "text",
   label: "Expiration (mm/yy)",
   autocomplete: "cc-exp",
+  required: true,
+};
+
+const CCExpMonthSelectField: FormFieldDefinition = {
+  id: "cc-exp-month",
+  type: "select",
+  options: [
+    { value: "", label: "Select month" },
+    { value: "01", label: "january" },
+    { value: "02", label: "february" },
+    { value: "03", label: "march" },
+    { value: "04", label: "april" },
+    { value: "05", label: "may" },
+    { value: "06", label: "june" },
+    { value: "07", label: "july" },
+    { value: "08", label: "august" },
+    { value: "09", label: "september" },
+    { value: "10", label: "october" },
+    { value: "11", label: "november" },
+    { value: "12", label: "december" },
+  ],
+  label: "Expiration month",
+  autocomplete: "cc-exp-month",
+  required: true,
+};
+
+const CCExpYearSelectField: FormFieldDefinition = {
+  id: "cc-exp-year",
+  type: "select",
+  options: [
+    { value: "", label: "Select year" },
+    ...Array.from({ length: 10 }).map((_, i) => {
+      const value = (2024 + i).toString();
+      return {
+        value,
+        label: value,
+      };
+    }),
+  ],
+  label: "Expiration year",
+  autocomplete: "cc-exp-year",
   required: true,
 };
 
@@ -375,8 +426,13 @@ export const FormDefinitions: FormDefinition[] = [
       {
         type: "frame",
         id: "cc-number-frame",
-        form: IFrameForm([CCNumberField, CCSecurityField, CCExpField]),
-        height: 305,
+        form: IFrameForm([
+          CCNumberField,
+          CCSecurityField,
+          CCExpMonthSelectField,
+          CCExpYearSelectField,
+        ]),
+        height: 420,
       },
     ],
     submitText: "Submit",

@@ -1,4 +1,4 @@
-import { Input } from "@/components/Input";
+import { Field } from "@/components/Field";
 import { FormDefinition } from "@/definitions";
 import { FC } from "react";
 
@@ -7,7 +7,7 @@ type Props = {
   noFocus?: boolean;
 };
 
-export const Fields: FC<Props> = ({ fields, noFocus }) =>
+export const FieldGroup: FC<Props> = ({ fields, noFocus }) =>
   fields.map((field, idx) => {
     switch (field.type) {
       case "separator":
@@ -30,16 +30,7 @@ export const Fields: FC<Props> = ({ fields, noFocus }) =>
         );
       default:
         return (
-          <Input
-            key={field.id}
-            id={field.id}
-            label={field.label}
-            type={field.type}
-            autocomplete={field.autocomplete}
-            required={field.required}
-            inputMode={field.inputMode}
-            autoFocus={!noFocus && idx === 0}
-          />
+          <Field key={field.id} autoFocus={!noFocus && idx === 0} {...field} />
         );
     }
   });
