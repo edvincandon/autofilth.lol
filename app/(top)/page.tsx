@@ -1,3 +1,4 @@
+import { FormCard } from "@/components/FormCard";
 import { FormDefinitions } from "@/definitions";
 
 export default function Home() {
@@ -14,24 +15,20 @@ export default function Home() {
           const definition = btoa(encodeURIComponent(JSON.stringify(form)));
 
           return (
-            <a
+            <FormCard
               key={`form-${idx}`}
               href={`/form?definition=${definition}`}
-              className="group rounded-lg border border-gray-800 px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:border-neutral-700 dark:hover:bg-neutral-800/30"
-              rel="noopener noreferrer"
-            >
-              <h2 className="mb-3 text-md md:text-lg font-semibold">
-                {form.name}
-                <span className="inline-block ml-4 transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-                  →
-                </span>
-              </h2>
-              <p className="text-sm">
-                <span className="opacity-70">{form.description}</span>
-              </p>
-            </a>
+              title={form.name}
+              description={form.description}
+            />
           );
         })}
+
+        <FormCard
+          href="/webauthn"
+          title="🔐 WebAuthn Test"
+          description="Test WebAuthn registration and authentication"
+        />
       </div>
 
       <div className="max-w-3xl flex flex-col text-xs mt-16 gap-8 text-gray-200">
