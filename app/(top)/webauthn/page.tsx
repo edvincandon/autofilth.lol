@@ -6,12 +6,21 @@ import { WebAuthnLayout } from "@/components/WebAuthnLayout";
 import { useWebAuthn, WebAuthnResult } from "@/hooks/useWebAuthn";
 import { useState } from "react";
 
+const WELL_KNOWN_RPIDS = [
+  "autofilth.lol",
+  "www.autofilth.lol",
+  "vomit.autofilth.lol",
+  "subfilthy.autofilth.lol",
+  "autoslave.autofilth.lol",
+];
+
 export default function WebAuthn() {
   const [username, setUsername] = useState("");
   const [result, setResult] = useState<string>("");
   const [mode, setMode] = useState<"register" | "authenticate">("register");
+  const [rpId, setRpId] = useState<string | undefined>(undefined);
 
-  const webAuthn = useWebAuthn();
+  const webAuthn = useWebAuthn(rpId);
   const loading = webAuthn.loading;
 
   const execWebAuthn = async (
@@ -31,6 +40,26 @@ export default function WebAuthn() {
       <StatusMessage message={result} />
 
       <div className="w-[320px] space-y-6">
+        <div>
+          <label className="block text-sm font-mono leading-6 text-white">
+            RPID
+          </label>
+          <select
+            value={rpId ?? ""}
+            onChange={(e) =>
+              setRpId(e.target.value === "" ? undefined : e.target.value)
+            }
+            className="mt-2 w-full rounded-lg border border-gray-800 bg-transparent px-4 py-3 text-sm transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+          >
+            <option value="">current host</option>
+            {WELL_KNOWN_RPIDS.map((id) => (
+              <option key={id} value={id}>
+                {id}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className="flex rounded-lg border border-gray-800 p-1">
           <button
             onClick={() => setMode("register")}

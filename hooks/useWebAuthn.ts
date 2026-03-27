@@ -42,7 +42,7 @@ const handleWebAuthnError = (error: any, operation: string): WebAuthnResult => {
   };
 };
 
-export const useWebAuthn = () => {
+export const useWebAuthn = (rpId?: string) => {
   const [credentials, setCredentials] = useLocalStorage<WebAuthnCredential[]>(
     "webauthn_credentials",
     []
@@ -95,7 +95,7 @@ export const useWebAuthn = () => {
         challenge,
         rp: {
           name: "AutoFilth WebAuthn Test",
-          id: window.location.hostname,
+          id: rpId ?? window.location.hostname,
         },
         user: {
           id: userId,
@@ -189,7 +189,7 @@ export const useWebAuthn = () => {
         })),
         timeout: 60000,
         userVerification: "preferred",
-        rpId: window.location.hostname,
+        rpId: rpId ?? window.location.hostname,
       };
 
       const credential = (await navigator.credentials.get({
