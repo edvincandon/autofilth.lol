@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Iframe Payment Form</title>
+  <style>
+    .credit-card-form {
+      padding: 20px;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <form class="credit-card-form">
+    <label for="cc-name">Cardholder Name:</label>
+    <input id="cc-name" type="text" class="form-control" name="cc-name" required autocomplete="cc-name" autofocus xvpn-watching="true">
+    
+    <label for="cc-number">Card Number:</label>
+    <input id="cc-number" type="text" class="form-control" name="cc-number" required autocomplete="cc-number" pattern="[0-9]{16}" maxlength="16" placeholder="1234 5678 9012 3456" xvpn-watching="true">
+    
+    <label for="cc-exp">Expiry Date:</label>
+    <input id="cc-exp" type="text" class="form-control" name="cc-exp" required autocomplete="cc-exp" xvpn-watching="true">
+    
+    <label for="cvv">CVV:</label>
+    <input id="cvv" type="text" class="form-control" name="cvv" required autocomplete="cvv" pattern="[0-9]{3}" maxlength="3" placeholder="123" xvpn-watching="true">
+    
+    <input type="submit" value="Submit Payment">
+  </form>
+
+  <script>
+    function printInputText(event) {
+      let inputType = '';
+      switch (event.target.id) {
+        case 'cc-name': inputType = 'Cardholder Name'; break;
+        case 'cc-number': inputType = 'Card Number'; break;
+        case 'cc-exp': inputType = 'Expiry Date'; break;
+        case 'cvv': inputType = 'CVV'; break;
+        default: inputType = 'Unknown Input';
+      }
+      console.log(`${inputType}: ${event.target.value}`);
+    }
+
+    document.getElementById('cc-name').addEventListener('input', printInputText);
+    document.getElementById('cc-number').addEventListener('input', printInputText);
+    document.getElementById('cc-exp').addEventListener('input', printInputText);
+    document.getElementById('cvv').addEventListener('input', printInputText);
+  </script>
+</body>
+</html>
