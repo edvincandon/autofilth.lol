@@ -419,6 +419,23 @@ export const FormDefinitions: FormDefinition[] = [
     okText: "✅ Identity saved !",
   },
   {
+    id: "login",
+    name: "🖼️ Login iframe",
+    description:
+      "Login form with email and password fields nested in a sub-frame.",
+    fields: [
+      {
+        type: "frame",
+        id: "login-frame",
+        form: IFrameForm([EmailField, CurrentPasswordField]),
+        height: 200,
+      },
+    ],
+    submitText: "Login",
+    errorText: "❌ Something went wrong",
+    okText: "✅ Logged in !",
+  },
+  {
     id: "cc-payment",
     name: "💳 Payment form",
     description: "A payment form with fields nested in sub-frames",
