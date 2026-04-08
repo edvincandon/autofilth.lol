@@ -458,6 +458,24 @@ export const FormDefinitions: FormDefinition[] = [
     errorText: "❌ Something went wrong",
     okText: "✅ Logged in !",
   },
+
+  {
+    id: "register",
+    name: "🖼️ Register iframe",
+    description:
+      "Register form with email and password fields nested in a sub-frame.",
+    fields: [
+      {
+        type: "frame",
+        id: "register-frame",
+        form: IFrameForm([EmailField, NewPasswordField, ConfirmPasswordField]),
+        height: 300,
+      },
+    ],
+    submitText: "Register",
+    errorText: "❌ Something went wrong",
+    okText: "✅ Account created !",
+  },
   {
     id: "cc-payment",
     name: "💳 Payment form",
