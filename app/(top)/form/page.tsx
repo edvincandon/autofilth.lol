@@ -5,6 +5,7 @@ import { Select } from "@/components/Select";
 import {
   FormMode,
   FormModes,
+  FrameOrigins,
   ResponseStatus,
   ResponseStatuses,
 } from "@/definitions";
@@ -13,7 +14,7 @@ import { FormResult, useFormResult } from "@/hooks/useFormResult";
 import { useLocalStorage } from "@/utils";
 import { useRef } from "react";
 
-type FormState = { mode: FormMode; status: ResponseStatus };
+type FormState = { mode: FormMode; status: ResponseStatus; frameOrigin: string };
 
 export default function Form() {
   const [config, setConfig] = useFormDefinition();
@@ -23,9 +24,12 @@ export default function Form() {
   const [state, setState] = useLocalStorage<FormState>("form_state", {
     mode: "form_submit:action",
     status: 200,
+    frameOrigin: "",
   });
 
   if (!config) return window.location.replace("/");
+
+  const hasFrameFields = config.form.fields.some((f) => f.type === "frame");
 
   const ajaxSubmit = async () => {
     try {
@@ -111,7 +115,7 @@ export default function Form() {
             )}
 
             <div className="grid grid-cols-1 gap-y-6">
-              <FieldGroup fields={config.form.fields} />
+              <FieldGroup fields={config.form.fields} frameOrigin={state.frameOrigin} />
 
               <button
                 className="mt-4 group rounded-lg border border-gray-800 px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
@@ -154,6 +158,19 @@ export default function Form() {
             })
           }
         />
+
+        {hasFrameFields && (
+          <>
+            <span className="text-xl mt-4 hidden lg:block">→</span>
+            <Select<string>
+              id="frameOrigin"
+              value={state.frameOrigin ?? ""}
+              label="Frame origin"
+              options={FrameOrigins}
+              onChange={(value) => setState({ ...state, frameOrigin: value })}
+            />
+          </>
+        )}
       </footer>
     </>
   );

@@ -21,6 +21,29 @@ export const ResponseStatuses: { label: string; value: ResponseStatus }[] = [
   { label: "Internal server error", value: 500 },
 ];
 
+export const FrameOrigins: { label: string; value: string }[] = [
+  {
+    label: "Same origin",
+    value: "",
+  },
+  {
+    label: "autofilth.lol",
+    value: "https://autofilth.lol",
+  },
+  {
+    label: "www.autofilth.lol",
+    value: "https://www.autofilth.lol",
+  },
+  {
+    label: "subfilthy.autofilth.lol",
+    value: "https://subfilthy.autofilth.lol",
+  },
+  {
+    label: "autoslave.autofilth.lol",
+    value: "https://autoslave.autofilth.lol",
+  },
+];
+
 export type FormFieldDefinition =
   | {
       id: string;
